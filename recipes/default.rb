@@ -139,7 +139,7 @@ files.each do |name, content|
 end
 
 # 2fa
-if true
+if config['use_2fa']
   file "/etc/openvpn/#{server_name}/otp_secrets" do
     owner 'openvpn'
     group 'openvpn'
