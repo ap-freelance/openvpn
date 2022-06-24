@@ -61,3 +61,11 @@ persist-tun
 
 verb <%= @config[:verb] %>
 mute 20
+
+<% if @config[:use_2fa] -%>
+# 2FA
+# OTP PLUGIN
+plugin "/usr/lib64/openvpn/plugins/openvpn-otp.so" debug=0 otp_secrets=/etc/openvpn/<%= @server_name %>/otp_secrets otp_slop=180 totp_t0=0 totp_step=30 totp_digits=6 motp_step=10
+# disable username/password renegotiation"
+auth-gen-token"
+<% end -%>
