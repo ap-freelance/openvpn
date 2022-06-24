@@ -138,6 +138,26 @@ files.each do |name, content|
   end
 end
 
+# 2fa
+if true
+  file "/etc/openvpn/#{server_name}/otp_secrets" do
+    owner 'openvpn'
+    group 'openvpn'
+    mode '0600'
+    content ""
+    sensitive true
+    action :create_if_missing
+    notifies :restart, "service[#{service_name}]", :delayed
+  end
+
+  cookbook_file "/usr/lib64/openvpn/plugins/openvpn-otp.so" do
+      source "openvpn/files/openvpn-otp.so"
+  end
+    
+  package "libpam-google-authenticator"
+end
+# end 2fa
+
 service service_name do
   action [:enable]
   only_if { service_name == 'openvpn' }
