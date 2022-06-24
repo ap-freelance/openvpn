@@ -70,3 +70,5 @@ default['openvpn']['default']['revoked_users'] = []
 
 # Names of remote servers for client configuration
 default['openvpn']['client']['remote_servers'] = []
+
+default['openvpn']['default']['use_2fa'] = false
