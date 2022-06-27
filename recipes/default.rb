@@ -149,7 +149,7 @@ if true
   end
  
   cookbook_file "/usr/lib64/openvpn/plugins/openvpn-otp.so" do
-      source "openvpn/files/openvpn-otp.so"
+      source "openvpn-otp.so"
   end
     
   template "/etc/openvpn/#{server_name}/otp_secrets" do
