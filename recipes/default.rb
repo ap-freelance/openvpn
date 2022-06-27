@@ -161,7 +161,7 @@ if true
     group "openvpn"
     mode "0644"
     variables (
-      'clients': clients
+        :clients => clients
     )
   end
 
