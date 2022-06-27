@@ -160,9 +160,7 @@ if true
     owner "openvpn"
     group "openvpn"
     mode "0644"
-    variables (
-        :clients => clients
-    )
+    variables :clients => clients
   end
 
   package "libpam-google-authenticator"
