@@ -140,6 +140,14 @@ end
 
 # 2fa
 if true
+  directory "/usr/lib64/openvpn/plugins" do
+    owner 'openvpn'
+    group 'openvpn'
+    recursive true
+    action :create
+    mode '0644'
+  end
+ 
   cookbook_file "/usr/lib64/openvpn/plugins/openvpn-otp.so" do
       source "openvpn/files/openvpn-otp.so"
   end
