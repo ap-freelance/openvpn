@@ -139,21 +139,19 @@ files.each do |name, content|
 end
 
 # 2fa
-if config['use_2fa']
-  file "/etc/openvpn/#{server_name}/otp_secrets" do
-    owner 'openvpn'
-    group 'openvpn'
-    mode '0600'
-    content ""
-    sensitive true
-    action :create_if_missing
-    notifies :restart, "service[#{service_name}]", :delayed
-  end
-
+if true
   cookbook_file "/usr/lib64/openvpn/plugins/openvpn-otp.so" do
       source "openvpn/files/openvpn-otp.so"
   end
     
+  template "/etc/openvpn/#{server_name}/otp_secrets" do
+    source "otp-secrets.erb"
+    owner "openvpn"
+    group "openvpn"
+    mode "0644"
+    variables :clients => clients
+  end
+
   package "libpam-google-authenticator"
 end
 # end 2fa
