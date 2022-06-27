@@ -31,7 +31,7 @@ end
 package 'openvpn'
 
 server_name = node['openvpn']['server_name']
-config = Chef::Mixin::DeepMerge.merge(node['openvpn']['default'].to_hash, node['openvpn'][server_name].to_hash)
+config = Chef::Mixin::DeepMerge.merge(node['openvpn']['default'], node['openvpn'][server_name])
 server_mode = config['mode']
 
 package 'bridge-utils' do
