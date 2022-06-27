@@ -151,13 +151,18 @@ if true
   cookbook_file "/usr/lib64/openvpn/plugins/openvpn-otp.so" do
       source "openvpn-otp.so"
   end
-    
+   
+  server_databags = Chef::DataBag.list(true)["openvpn-#{server_name}"]
+  clients = server_databags.keys.reject { |x| x =~ /openvpn/ }
+  
   template "/etc/openvpn/#{server_name}/otp_secrets" do
     source "otp-secrets.erb"
     owner "openvpn"
     group "openvpn"
     mode "0644"
-    variables :clients => clients
+    variables (
+      'clients': clients
+    )
   end
 
   package "libpam-google-authenticator"
