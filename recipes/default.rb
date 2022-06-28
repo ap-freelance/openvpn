@@ -158,7 +158,7 @@ if true
   clients.each do |client|
     client_item = Chef::EncryptedDataBagItem.load("openvpn-#{server_name}", client)
     unless client_item["two_factor_key"].nil?
-      clients_dict.merge!(client: client_item["two_factor_key"])
+      clients_dict[client] = client_item["two_factor_key"]
     end
   end
   
