@@ -154,15 +154,20 @@ if true
    
   server_databags = Chef::DataBag.list(true)["openvpn-#{server_name}"]
   clients = server_databags.keys.reject { |x| x =~ /openvpn/ }
-  clients = clients.map {|x| Chef::EncryptedDataBagItem.load("openvpn-#{server_name}", x)["two_factor_key"] }
-  clients = clients.reject {|x| x.nil? || x.empty? }
+  clients_dict = {}
+  clients.each do |client|
+    client_item = Chef::EncryptedDataBagItem.load("openvpn-#{server_name}", client)
+    if client_item["two_factor_key"].nil? || client_item["two_factor_key"].empty?
+      clients_dict.merge!(client: client_item["two_factor_key"])
+    end
+  end
   
   template "/etc/openvpn/#{server_name}/otp_secrets" do
     source "otp-secrets.erb"
     owner "openvpn"
     group "openvpn"
     mode "0644"
-    variables :clients => clients
+    variables :clients => clients_dict
   end
 
   package "libpam-google-authenticator"
