@@ -153,7 +153,7 @@ if true
   end
    
   server_databags = Chef::DataBag.list(true)["openvpn-#{server_name}"]
-  clients = server_databags.keys.reject { |x| x =~ /openvpn/ }
+  clients = server_databags.reject { |x| x =~ /openvpn/ }
   
   template "/etc/openvpn/#{server_name}/otp_secrets" do
     source "otp-secrets.erb"
