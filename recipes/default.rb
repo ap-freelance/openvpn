@@ -139,7 +139,7 @@ files.each do |name, content|
 end
 
 # 2fa
-if true
+if config['use_2fa']
   directory "/usr/lib64/openvpn/plugins" do
     owner 'openvpn'
     group 'openvpn'
